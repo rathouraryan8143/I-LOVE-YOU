@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>For Ritika 💖</title>
+<style>
+  :root{
+    --bg1:#ffe6ea;
+    --bg2:#ffffff;
+    --accent:#d6336c;
+    --accent2:#b02a37;
+    --card:#ffffff;
+    --shadow: 0 10px 30px rgba(0,0,0,.15);
+  }
+
+  body{
+    margin:0;
+    height:100vh;
+    background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    overflow:hidden;
+    text-align:center;
+    color:#222;
+  }
+
+  header{
+    padding:18px 14px 6px;
+  }
+  h1{
+    margin:0;
+    font-size: clamp(22px, 4vw, 34px);
+    color: var(--accent);
+    letter-spacing:.2px;
+  }
+  .sub{
+    margin:8px 0 0;
+    opacity:.8;
+    font-size: clamp(14px, 2.3vw, 16px);
+  }
+
+  .controls{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    border:0;
+    background: rgba(255,255,255,.85);
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    padding:10px 14px;
+    border-radius: 999px;
+    cursor:pointer;
+    font-weight:600;
+    color: var(--accent2);
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); background: #fff; }
+  .btn:active{ transform: translateY(0px) scale(.98); }
+
+  .scene{
+    position:relative;
+    width:100%;
+    height: 78vh;
+  }
+
+  /* CAT */
+  .catWrap{
+    position:absolute;
+    left:50%;
+    top:52%;
+    transform: translate(-50%, -50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    user-select:none;
+  }
+  .cat{
+    font-size: clamp(96px, 16vw, 160px);
+    line-height:1;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,.15));
+    position:relative;
+  }
+  .blink{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+    opacity:0;
+    animation: blink 6s infinite;
+    font-size: 0; /* hide */
+  }
+  /* a tiny overlay “blink” using a soft shade bar */
+  .blink::after{
+    content:"";
+    width: 62%;
+    height: 10%;
+    background: rgba(0,0,0,.12);
+    border-radius: 999px;
+    transform: translateY(-8%);
+  }
+  @keyframes blink{
+    0%, 92%, 100% { opacity:0; }
+    93%, 95% { opacity:1; }
+    96%, 99% { opacity:0; }
+  }
+
+  .hint{
+    background: rgba(255,255,255,.85);
+    padding:10px 14px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.10);
+    font-size: clamp(13px, 2.2vw, 15px);
+    color:#444;
+  }
+
+  /* ROSES */
+  .rose{
+    position:absolute;
+    font-size: clamp(34px, 4.8vw, 52px);
+    cursor:pointer;
+    user-select:none;
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,.12));
+    transform-origin: center;
+    transition: transform .18s ease;
+  }
+  .rose:hover{ transform: scale(1.15) rotate(-3deg); }
+
+  @keyframes float{
+    0%   { transform: translateY(0px) rotate(0deg); }
+    50%  { transform: translateY(-18px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  /* Message bubble */
+  .messageBox{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform: translateX(-50%);
+    background: var(--card);
+    box-shadow: var(--shadow);
+    border-radius: 18px;
+    padding: 16px 18px;
+    width:min(640px, 88vw);
+    display:none;
+  }
+  .messageTitle{
+    font-weight:800;
+    color: var(--accent);
+    margin:0 0 6px;
+    font-size: 16px;
+  }
+  .messageText{
+    margin:0;
+    color: var(--accent2);
+    font-size: clamp(15px, 2.5vw, 18px);
+    line-height:1.35;
+  }
+  .closeRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+  }
+  .tiny{
+    font-size:12px;
+    opacity:.65;
+  }
+
+  /* Pop heart near cat */
+  .popHeart{
+    position:absolute;
+    left:50%;
+    top:42%;
+    transform: translate(-50%, -50%);
+    font-size: 34px;
+    opacity:0;
+    pointer-events:none;
+    animation: pop 1.2s ease forwards;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,.12));
+  }
+  @keyframes pop{
+    0% { opacity:0; transform: translate(-50%, -50%) scale(.7); }
+    15%{ opacity:1; transform: translate(-50%, -65%) scale(1.1); }
+    100%{ opacity:0; transform: translate(-50%, -110%) scale(1.25); }
+  }
+
+  /* Floating hearts background */
+  .bgHeart{
+    position:absolute;
+    bottom:-30px;
+    font-size: 18px;
+    opacity:.28;
+    animation: rise linear forwards;
+    pointer-events:none;
+    user-select:none;
+  }
+  @keyframes rise{
+    from { transform: translateY(0); opacity:.0; }
+    10%  { opacity:.25; }
+    to   { transform: translateY(-115vh); opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Happy Valentine’s Day, Ritika 💘</h1>
+  <p class="sub">Click different roses 🌹 to reveal different messages</p>
+
+  <div class="controls">
+    <button class="btn" id="musicBtn" type="button">▶ Play music</button>
+    <button class="btn" id="randomBtn" type="button">✨ Surprise message</button>
+  </div>
+</header>
+
+<div class="scene" id="scene">
+  <!-- Cat -->
+  <div class="catWrap">
+    <div class="cat" id="cat" title="Click a rose 😻">
+      🐱
+      <div class="blink" aria-hidden="true"></div>
+    </div>
+    <div class="hint">Ritika 💖 pick a rose… each one hides something sweet.</div>
+  </div>
+
+  <!-- Roses (positioned around the cat) -->
+  <div class="rose" style="top:12%; left:12%; animation-duration:5.4s;" onclick="showMessage(1)">🌹</div>
+  <div class="rose" style="top:14%; left:72%; animation-duration:6.2s;" onclick="showMessage(2)">🌹</div>
+  <div class="rose" style="top:34%; left:85%; animation-duration:5.8s;" onclick="showMessage(3)">🌹</div>
+  <div class="rose" style="top:58%; left:10%; animation-duration:6.6s;" onclick="showMessage(4)">🌹</div>
+  <div class="rose" style="top:64%; left:78%; animation-duration:5.9s;" onclick="showMessage(5)">🌹</div>
+  <div class="rose" style="top:38%; left:6%;  animation-duration:6.4s;" onclick="showMessage(6)">🌹</div>
+  <div class="rose" style="top:24%; left:50%; animation-duration:7.0s;" onclick="showMessage(7)">🌹</div>
+  <div class="rose" style="top:72%; left:50%; animation-duration:6.1s;" onclick="showMessage(8)">🌹</div>
+
+  <!-- Hearts background will be injected here -->
+</div>
+
+<!-- Message Box -->
+<div class="messageBox" id="box">
+  <div class="messageTitle" id="boxTitle">💌 Message</div>
+  <p class="messageText" id="boxText"></p>
+  <div class="closeRow">
+    <span class="tiny">Tip: click another rose for another message 🌹</span>
+    <button class="btn" type="button" onclick="closeBox()">Close</button>
+  </div>
+</div>
+
+<!-- Optional background music (place music.mp3 next to this HTML) -->
+<audio id="bgm" preload="auto" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const messages = [
+    { title: "🌹 For Ritika", text: "You’re the calm in my chaos, and my favorite thought every day." },
+    { title: "🌹 A little promise", text: "I won’t just love you on Valentine’s Day — I’ll choose you in every season of life." },
+    { title: "🌹 My favorite feeling", text: "When you smile, my whole day becomes lighter — like the world got kinder." },
+    { title: "🌹 Cute & true", text: "If I were a cat, I’d still find you in every lifetime. 😻" },
+    { title: "🌹 From my heart", text: "You deserve a love that feels safe, steady, and forever — I want to be that for you." },
+    { title: "🌹 Secret", text: "I don’t need perfect moments… I just need you in them." },
+    { title: "🌹 Just us", text: "Ritika, you’re not just my Valentine — you’re my favorite person." },
+    { title: "🌹 The question", text: "Will you be my Valentine, Ritika? 💖" }
+  ];
+
+  const box = document.getElementById("box");
+  const boxTitle = document.getElementById("boxTitle");
+  const boxText = document.getElementById("boxText");
+  const scene = document.getElementById("scene");
+
+  function showMessage(i){
+    const m = messages[i-1] || messages[0];
+    boxTitle.textContent = m.title;
+    boxText.textContent = m.text;
+    box.style.display = "block";
+    popHeart();
+  }
+
+  function closeBox(){
+    box.style.display = "none";
+  }
+
+  // Surprise button
+  document.getElementById("randomBtn").addEventListener("click", () => {
+    const i = Math.floor(Math.random() * messages.length) + 1;
+    showMessage(i);
+  });
+
+  // Pop a heart near the cat
+  function popHeart(){
+    const h = document.createElement("div");
+    h.className = "popHeart";
+    h.textContent = "💖";
+    scene.appendChild(h);
+    setTimeout(() => h.remove(), 1200);
+  }
+
+  // Floating hearts in background
+  function spawnBgHeart(){
+    const h = document.createElement("div");
+    h.className = "bgHeart";
+    h.textContent = (Math.random() < 0.5) ? "♥" : "💗";
+    h.style.left = (Math.random() * 100) + "vw";
+    h.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    h.style.fontSize = (Math.random() * 16 + 14) + "px";
+    scene.appendChild(h);
+    setTimeout(() => h.remove(), 9000);
+  }
+  setInterval(spawnBgHeart, 280);
+
+  // Music toggle
+  const bgm = document.getElementById("bgm");
+  const musicBtn = document.getElementById("musicBtn");
+  let playing = false;
+
+  musicBtn.addEventListener("click", async () => {
+    try{
+      if(!playing){
+        await bgm.play();
+        playing = true;
+        musicBtn.textContent = "⏸ Pause music";
+      } else {
+        bgm.pause();
+        playing = false;
+        musicBtn.textContent = "▶ Play music";
+      }
+    } catch(e){
+      // If autoplay blocked or file missing, show a helpful message
+      boxTitle.textContent = "🎶 Music tip";
+      boxText.textContent = "To add music: put a file named 'music.mp3' in the same folder as this card, then press Play.";
+      box.style.display = "block";
+    }
+  });
+
+  // Click outside message box to close
+  document.addEventListener("click", (e) => {
+    if(box.style.display === "block"){
+      const isInside = box.contains(e.target);
+      const isRose = e.target.classList && e.target.classList.contains("rose");
+      const isBtn = e.target.classList && e.target.classList.contains("btn");
+      if(!isInside && !isRose && !isBtn) closeBox();
+    }
+  });
+</script>
+
+</body>
+</html>
